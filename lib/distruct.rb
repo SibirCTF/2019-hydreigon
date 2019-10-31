@@ -1,0 +1,2 @@
+module Distruct
+end

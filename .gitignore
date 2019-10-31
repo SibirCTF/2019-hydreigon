@@ -1,0 +1,4 @@
+/public/assets*
+/tmp
+node_modules
+.idea

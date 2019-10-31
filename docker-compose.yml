@@ -1,0 +1,36 @@
+version: "3"
+services:
+  db:
+    image: postgres:latest
+    networks:
+      - hidden
+    ports:
+      - 5432:5432
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+  redis:
+    image: redis:latest
+    networks:
+      - hidden
+    ports:
+      - 6379:6379
+  web:
+    build: .
+    networks:
+      - hidden
+      - web
+    volumes:
+      - .:/app
+    ports:
+      - 2300:2300
+    depends_on:
+      - db
+      - redis
+volumes:
+  dbdata:
+networks:
+  web:
+    external:
+      name: web
+  hidden:
+    internal: true

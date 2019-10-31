@@ -1,0 +1,3 @@
+project=distruct
+test=rspec
+template=erb

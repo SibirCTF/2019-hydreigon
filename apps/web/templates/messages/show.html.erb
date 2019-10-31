@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-auto mr-auto">
+    <div class="h3">
+      Note contents
+    </div>
+  </div>
+  <div class="col-auto">
+    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+      ?
+    </button>
+  </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>
+            This note was destroyed. If you need to keep it, copy it before closing this window.
+            If you have not set a password, just click "Decrypt note".
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% if message == nil %>
+  <p>This message can't found! </p>
+<% elsif message.un_available? %>
+  <p>This message was already destroyed! </p>
+<% else %>
+  <div style="display:none;" id="destruction_time"><%= message.self_destruction_time.httpdate %></div>
+  <p id="self_destruction_counter"></p>
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <textarea class="form-control" id="select-link"><%= message.text %></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row form-group">
+      <div class="col-auto">
+        <button type="button" id="decrypt" onclick="decryptNote()" class="form-control btn btn-primary">Decrypt note</button>
+      </div>
+      <div class="col-auto">
+        <input type="password" class="form-control" id="inputPassword" name="inputPassword" required>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  function decryptNote() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/crypto', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            document.getElementById("select-link").value = xhr.responseText
+        }
+    }
+    let text = document.getElementById("select-link").value
+    let pass = document.getElementById("inputPassword").value
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+    xhr.send('message%5Btext%5D=' + encodeURIComponent(text) + '&message%5Bclient_password%5D=' + encodeURIComponent(pass));
+  }
+</script>

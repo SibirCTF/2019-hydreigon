@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-auto mr-auto">
+    <div class="h3">
+      Note link ready
+    </div>
+  </div>
+  <div class="col-auto">
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModal">
+      ?
+    </button>
+  </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>
+            Copy the link, paste it into an email or instant message and send it to whom you want to read the note.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p>The note will self-destruct.</p>
+<div class="row">
+  <div class="col">
+    <div class="form-group">
+      <textarea class="form-control" id="select-link"><%= "https://#{Hanami.environment.host}:#{Hanami.environment.port}/messages/#{id}" %></textarea>
+    </div>
+    <button type="button" onclick="selectLink()" class="btn btn-success">Select link</button>
+  </div>
+</div>
+<script>
+  function selectLink() {
+    document.getElementById("select-link").select();
+  }
+</script>

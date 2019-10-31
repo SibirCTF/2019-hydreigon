@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-auto mr-auto">
+    <div class="h3">
+      New note
+    </div>
+  </div>
+  <div class="col-auto">
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalHelp">
+      ?
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalHelp" tabindex="-1" role="dialog" aria-labelledby="modalHelpLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>
+            With Hydreigon you can send notes that will self-destruct after being read.
+          </p>
+          <p>
+            1. Write the note below, encrypt it and get a link.
+          </p>
+          <p>
+            2. Send the link to whom you want to read the note.
+          </p>
+          <p>
+            3. The note will self-destruct after being read by the recipient.
+          </p>
+          <p>
+            By clicking the options button, you can specify a manual password to encrypt the note, set an expiration date and be notified when the note is destroyed.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+  <%=
+    form_for :message, routes.messages_path, id: 'create-form', 'data-remote': true do
+      div class: "form-group" do
+        text_area :text, class: "form-control", id: "text", placeholder: "Write your note here...", required: "required"
+      end
+      div class: "form-group" do
+        p class: 'validation-error-text', style: "display: none;"
+        div class: 'more-options', style: 'display:none;' do
+            p class: 'clicks-checkbox' do
+            div class: "form-group" do
+              label "Clicks Left"
+              number_field :clicks_left, class: "form-control", id: 'clicks-left', value: 1 , min: 1, max: 100
+              small class: "form-text text-muted" do
+                "How many times can I see a note"
+              end
+            end
+            div class: "form-group" do
+              label "Self Destruction Time"
+              datetime_field :self_destruction_time, class: "form-control", id: 'self_destruction_time', value: (Time.now + 86400), required: "required"
+              small class: "form-text text-muted" do
+                "The time when the note itself will be deleted"
+              end
+            end
+            p class: 'validation-error-amount', style: "display: none;"
+            p class: 'client_password' do
+              'Enter password to encrypt your note!'
+            end
+            text_field :client_password, type: 'password', class: "form-control", id: 'client_password'
+            small class: "form-text text-muted" do
+              "We'll never store your password or share notes with anyone else."
+            end
+            p class: 'validation-client-password', style: "display: none;"
+          end
+        end
+        div class: "row" do
+          div class: "col-auto mr-auto" do
+            submit 'Create note', class: "btn btn-outline-success", id: "create-message"
+          end
+          div class: "col-auto" do
+            button 'More options', class: "btn btn-outline-secondary options", id: "more-options"
+          end
+        end
+      end
+    end
+  %>
+  </div>
+</div>

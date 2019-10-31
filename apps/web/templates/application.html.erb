@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <%= stylesheet 'bootstrap', 'main' %>
+    <%= javascript 'jquery-3.4.1.min', 'main', 'bootstrap', 'timer' %>
+    <%= favicon %>
+    <title>Hydreigon</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="/">
+        <%= image 'logo.png', width: "30", height: "30", class: "d-inline-block align-top" %>
+        Hydreigon
+      </a>
+    </nav>
+    <div class="container">
+      <br>
+      <%= yield %>
+    </div>
+  </body>
+</html>
